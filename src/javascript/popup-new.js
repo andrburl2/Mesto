@@ -1,6 +1,5 @@
-class PopupNew extends PopupEdit {
+export default class PopupNew{
   constructor(popup, openButton) {
-    super();
 
     this.popup = popup;
     this.openButton = openButton;
@@ -32,7 +31,7 @@ class PopupNew extends PopupEdit {
     this.popup.querySelector(".popup__button_type_add").setAttribute("disabled", true);
     this.popup.querySelector(".popup__button_type_add").classList.remove("popup__button_active");
 
-    super.resetErrors();
+    this.resetErrors();
   }
 
   addCard(event) {
@@ -50,5 +49,10 @@ class PopupNew extends PopupEdit {
       this.popup.querySelector(".popup__button_type_add").textContent = "+";
       this.toggle();
     }
+  }
+
+  resetErrors() {
+    const errors = document.querySelectorAll(".popup__error");
+    errors.forEach( (element) => {element.textContent = ""});
   }
 }

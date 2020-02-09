@@ -1,7 +1,5 @@
-class PopupAvatar extends PopupEdit {
+export default class PopupAvatar{
   constructor (popup) {
-    super();
-
     this.popup = popup;
 
     this.avatarCallback = null;
@@ -30,7 +28,7 @@ class PopupAvatar extends PopupEdit {
     this.popup.querySelector(".popup__button").setAttribute("disabled", true);
     this.popup.querySelector(".popup__button").classList.remove("popup__button_active");
 
-    super.resetErrors();
+    this.resetErrors();
   }
 
   changeAvatar(event) {
@@ -49,4 +47,9 @@ class PopupAvatar extends PopupEdit {
       this.toggle(event);
     }
   }
-}
+
+  resetErrors() {
+    const errors = document.querySelectorAll(".popup__error");
+    errors.forEach( (element) => {element.textContent = ""});
+  }
+};

@@ -1,12 +1,23 @@
+import "./index.css";
+import Api from "./javascript/api";
+import CardList from "./javascript/card-list";
+import Card from "./javascript/card";
+import PopupEdit from "./javascript/popup-edit";
+import PopupAvatar from "./javascript/popup-avatar";
+import PopupImage from "./javascript/popup-image";
+import PopupNew from "./javascript/popup-new";
+import Validation from "./javascript/validation";
+
+
 const nameInfo = document.querySelector(".user-info__name");
 const info = document.querySelector(".user-info__job");
 const avatar = document.querySelector(".user-info__photo");
 
 const cardList = new CardList(document.querySelector(".places-list"));
 
-const api = new Api({adress: "http://95.216.175.5", token: "f0c09423-d4a2-4b93-afdb-8736ed815dec", groupId: "cohort6"});
+const api = new Api({adress: NODE_ENV === "production"?"https://95.216.175.5":"http://95.216.175.5", token: "f0c09423-d4a2-4b93-afdb-8736ed815dec", groupId: "cohort6"});
 
-const popupEdit = new PopupEdit(document.querySelector(".popup-edit"), document.querySelector(".user-info__button_type_edit"));
+const popupEdit = new PopupEdit(document.querySelector(".popup-edit"), document.querySelector(".user-info__button_type_edit"), document.querySelector(".popup-edit__name-target"), document.querySelector(".popup-edit__info-target"));
 const popupNew = new PopupNew(document.querySelector(".popup-new"), document.querySelector(".user-info__button_type_add"));
 const popupImage = new PopupImage(document.querySelector(".popup-image"));
 const popupAvatar = new PopupAvatar(document.querySelector(".popup-avatar"));
@@ -60,25 +71,5 @@ popupAvatar.form.addEventListener("input", validation.validityForm);
 
 popupImage.popup.querySelector(".popup-image__close").addEventListener("click", popupImage.toggle);
 
-window.addEventListener("load", function () {
-  api.getCards();
-  api.updateProfile();
-});
-
-/**
- * Здравствуйте, очень хорошая работа. Видно что вы делаете сами и прорабатываете каждый момент.
- *
- * 
- * Можно лучше: Уберите ключи на подобии "219180ad7f666367f7dd3e0c" в отдельный файл
- * UPD: Исправлено.
- *
- * Надо исправить: зачем вы пытаетесь в конструктор передать callback? Передавайте его в методы класса,
- * А методы вызывайте прям из классов Card,CardList и так далее
- * UPD: Исправлено во всей работе.
- *
- * Где в классе я написал "// удалите else оно здесь лишнее, у вас же return стоит"
- * Просто оставьте
- *  return Promise.reject(`Ошибка: ${res.status}`);
- * UPD: Исправил по всему классу, точки с запятой тоже расставил.
- *
- */
+api.getCards();
+api.updateProfile();

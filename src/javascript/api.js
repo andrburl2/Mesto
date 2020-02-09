@@ -1,4 +1,4 @@
-class Api {
+export default class Api {
   constructor({ adress, token, groupId }) {
     this.adress = adress;
     this.token = token;
@@ -48,17 +48,11 @@ class Api {
     })
       .then(res => {
         if (res.ok) {
-          // Можно лучше: ставьте точку с запятой ";"
           return res.json();
-          // удалите else оно здесь лишнее, у вас же return стоит
         }
         return Promise.reject(`Ошибка: ${res.status}`);
       })
       .then((result) => {
-        //  Надо исправить: Для реализации вы создавали в прошлом спринте отдельные классы.   
-        //  Не переносите и не дублируйте реализацию в  класс Api, С класса можно только возвращать данные  
-        //  Которые получены от сервера. Это надо удалить  
-        // UPD: Исправлено.
         this.initialChangeCallBack(result.name, result.about, `url(${result.avatar})`);
       })
       .catch((result) => {
@@ -74,9 +68,7 @@ class Api {
     })
       .then(res => {
         if (res.ok) {
-          // Можно лучше: ставьте точку с запятой ";"
           return res.json();
-          // удалите else оно здесь лишнее, у вас же return стоит
         }
         return Promise.reject(`Ошибка: ${res.status}`);
       })
@@ -102,9 +94,7 @@ class Api {
     })
       .then(res => {
         if (res.ok) {
-          // Можно лучше: ставьте точку с запятой ";"
           return res.json();
-          // удалите else оно здесь лишнее, у вас же return стоит
         }
         return Promise.reject(`Ошибка: ${res.status}`);
       })
@@ -131,7 +121,6 @@ class Api {
       .then(res => {
         if (res.ok) {
           return res.json();
-          // удалите else оно здесь лишнее, у вас же return стоит
         }
         return Promise.reject(`Ошибка: ${res.status}`);
       })
@@ -152,9 +141,7 @@ class Api {
     })
       .then(res => {
         if (res.ok) {
-          // Можно лучше: ставьте точку с запятой ";"
           return res.json();
-          // удалите else оно здесь лишнее, у вас же return стоит
         }
         return Promise.reject(`Ошибка: ${res.status}`);
       })
@@ -176,9 +163,7 @@ class Api {
     })
       .then(res => {
         if (res.ok) {
-          // Можно лучше: ставьте точку с запятой ";"
           return res.json();
-          // удалите else оно здесь лишнее, у вас же return стоит
         }
         return Promise.reject(`Ошибка: ${res.status}`);
       })

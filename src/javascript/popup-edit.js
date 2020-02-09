@@ -1,7 +1,10 @@
-class PopupEdit {
-  constructor(popup, openButton) {
+export default class PopupEdit {
+  constructor(popup, openButton, textName, textInfo) {
     this.popup = popup;
     this.openButton = openButton;
+
+    this.textName = textName;
+    this.textInfo = textInfo;
 
     this.changeCallback = null;
     
@@ -25,8 +28,8 @@ class PopupEdit {
   toggle() {
     this.popup.classList.toggle("popup_is-opened");
 
-    this.editName.value = nameInfo.textContent;
-    this.description.value = info.textContent;
+    this.editName.value = this.textName.textContent;
+    this.description.value = this.textInfo.textContent;
     
     this.popup.querySelector(".popup__button_type_save").removeAttribute("disabled");
     this.popup.querySelector(".popup__button_type_save").classList.add("popup__button_active");
@@ -47,7 +50,7 @@ class PopupEdit {
       this.popup.querySelector(".popup__button").textContent = "Загрузка...";
     } else {
       this.popup.querySelector(".popup__button").textContent = "Сохранить";
-      this.toggle(event);
+      this.toggle();
     }
   }
 
