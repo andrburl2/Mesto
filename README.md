@@ -9,11 +9,11 @@
 - методология **БЭМ**,
 - **ООП**.
 
-## [Ссылка на проект:](https://andrburl2.github.io/Mesto/)
+## [Ссылка на проект](https://andrburl2.github.io/Mesto/)
 
 ## Установка проекта:
 1. Скопируйте репозиторий на ваш компьютер:
-`git clone https://github.com/karpov2/Mesto.git`
+`git clone https://github.com/andrburl2/Mesto.git`
 2. Иницилизируйте npm `npm i`
 * Development сборка с запуском сервера
 `npm run dev`
