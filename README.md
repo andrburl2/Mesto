@@ -21,5 +21,8 @@
 `npm run build`
 * Deploy: проект задеплоится на gh-pages
 `npm run deploy`
+<<<<<<< HEAD
 
 ## Версия 1.0.0 (версионность указана в тегах)
+=======
+>>>>>>> a2ac02e9639dda7ea1cf046758505fc30d22ffce
