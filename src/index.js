@@ -15,7 +15,7 @@ const avatar = document.querySelector(".user-info__photo");
 
 const cardList = new CardList(document.querySelector(".places-list"));
 
-const api = new Api({adress: NODE_ENV === "production"?"https://95.216.175.5":"http://95.216.175.5", token: "f0c09423-d4a2-4b93-afdb-8736ed815dec", groupId: "cohort6"});
+const api = new Api({adress: NODE_ENV === "development"?"http://praktikum.tk":"https://praktikum.tk", token: "f0c09423-d4a2-4b93-afdb-8736ed815dec", groupId: "cohort6"});
 
 const popupEdit = new PopupEdit(document.querySelector(".popup-edit"), document.querySelector(".user-info__button_type_edit"), document.querySelector(".popup-edit__name-target"), document.querySelector(".popup-edit__info-target"));
 const popupNew = new PopupNew(document.querySelector(".popup-new"), document.querySelector(".user-info__button_type_add"));
