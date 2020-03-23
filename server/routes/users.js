@@ -1,6 +1,7 @@
 const path = require('path');
 const userRouter = require('express').Router();
 
+// eslint-disable-next-line import/no-dynamic-require
 const usersData = require(path.join(__dirname, '../data/users.json'));
 
 const sendUsers = (req, res) => {
@@ -8,8 +9,9 @@ const sendUsers = (req, res) => {
 };
 
 const findUser = (req, res) => {
-  const id = req.params.id;
+  const { id } = req.params;
 
+  // eslint-disable-next-line no-underscore-dangle
   const user = usersData.find((el) => el._id === id);
 
   if (user) {
@@ -20,7 +22,7 @@ const findUser = (req, res) => {
   res.status(404).send({ message: 'Нет пользователя с таким id' });
 };
 
-userRouter.get('/users', sendUsers);
-userRouter.get('/users/:id', findUser);
+userRouter.get('/', sendUsers);
+userRouter.get('/:id', findUser);
 
 module.exports = userRouter;
