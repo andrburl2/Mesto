@@ -3,9 +3,6 @@ const users = require('./users.js');
 const cards = require('./cards.js');
 const error = require('./error.js');
 
-router.get("/users", users.sendUsers);
-router.get("/users/:id", users.findUser);
-router.get("/cards", cards);
-router.get("*", error);
+router.use(users).use(cards).use('*', error);
 
 module.exports = router;

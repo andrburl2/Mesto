@@ -1,8 +1,12 @@
 const path = require('path');
-const cards = require(path.join(__dirname, '../data/cards.json'));
+const cardRouter = require('express').Router();
 
-const sendCards = (req, res) => {
-  res.send(cards);
+const cardsData = require(path.join(__dirname, '../data/cards.json'));
+
+const cards = (req, res) => {
+  res.send(cardsData);
 };
 
-module.exports = sendCards;
+cardRouter.get('/cards', cards);
+
+module.exports = cardRouter;

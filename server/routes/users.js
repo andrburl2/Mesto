@@ -1,24 +1,26 @@
 const path = require('path');
-const users = require(path.join(__dirname, '../data/users.json'));
+const userRouter = require('express').Router();
+
+const usersData = require(path.join(__dirname, '../data/users.json'));
 
 const sendUsers = (req, res) => {
-  res.send(users);
+  res.send(usersData);
 };
 
 const findUser = (req, res) => {
   const id = req.params.id;
 
-  const user = users.find(el => el._id === id);
+  const user = usersData.find((el) => el._id === id);
 
   if (user) {
-    res.send(user)
-    return
-  };
+    res.send(user);
+    return;
+  }
 
-  res.status(404).send({ "message": "Нет пользователя с таким id" });
+  res.status(404).send({ message: 'Нет пользователя с таким id' });
 };
 
-module.exports = {
-  sendUsers,
-  findUser
-};
+userRouter.get('/users', sendUsers);
+userRouter.get('/users/:id', findUser);
+
+module.exports = userRouter;
