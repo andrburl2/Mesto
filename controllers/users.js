@@ -8,8 +8,14 @@ module.exports.getUsers = (req, res) => {
 
 module.exports.findUser = (req, res) => {
   User.findById(req.params.userId)
-    .then((users) => res.send({ data: users }))
-    .catch(() => res.status(500).send({ message: 'Не удается получить пользователя' }));
+    .then((users) => {
+      if (users) {
+        res.send({ data: users });
+      } else {
+        res.status(404).send({ message: 'Не удается найти пользователя' });
+      }
+    })
+    .catch(() => res.status(500).send({ message: 'Неправильный запрос' }));
 };
 
 module.exports.createUser = (req, res) => {
@@ -17,5 +23,5 @@ module.exports.createUser = (req, res) => {
 
   User.create({ name, about, avatar })
     .then((user) => res.send({ data: user }))
-    .catch(() => res.status(500).send({ message: 'Ошибка при создание пользователя' }));
+    .catch((err) => res.status(500).send({ message: err.message || 'Произошла ошибка' }));
 };
