@@ -13,7 +13,12 @@ mongoose.connect(mongoAdress, {
   useNewUrlParser: true,
   useCreateIndex: true,
   useFindAndModify: false,
-});
+  useUnifiedTopology: true,
+}).then(
+  () => { app.listen(PORT, () => {}); },
+  // eslint-disable-next-line no-console
+  (err) => { console.log(err); },
+);
 
 app.use((req, res, next) => {
   req.user = {
@@ -26,7 +31,3 @@ app.use((req, res, next) => {
 app.use('/users', require('./routes/users'));
 app.use('/cards', require('./routes/cards'));
 app.use('*', require('./routes/error'));
-
-app.listen(PORT, () => {
-
-});
