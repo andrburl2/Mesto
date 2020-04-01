@@ -1,6 +1,8 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
+require('dotenv').config();
 
 const { PORT, mongoAdress } = require('./config');
 
@@ -20,13 +22,7 @@ mongoose.connect(mongoAdress, {
   (err) => { console.log(err); },
 );
 
-app.use((req, res, next) => {
-  req.user = {
-    _id: '5e7b5a655fcb0e12f89a718a',
-  };
-
-  next();
-});
+app.use(cookieParser());
 
 app.use('/users', require('./routes/users'));
 app.use('/cards', require('./routes/cards'));
