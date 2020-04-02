@@ -37,6 +37,10 @@ const userSchema = new mongoose.Schema({
     required: true,
     select: false,
     minlength: 6,
+    validate: {
+      validator: (password) => /^\S{6,}$/.test(password),
+      message: 'Пароль должен состоять из символов',
+    },
   },
 });
 
