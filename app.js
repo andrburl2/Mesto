@@ -1,33 +1,37 @@
+require('dotenv').config();
+
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
 
-const { PORT, mongoAdress } = require('./config');
+const helmet = require('helmet');
+const rateLimit = require('express-rate-limit');
 
-const app = express();
+const { PORT, MONGO_ADRESS } = require('./config');
+const router = require('./routes/index');
 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
-
-mongoose.connect(mongoAdress, {
+mongoose.connect(MONGO_ADRESS, {
   useNewUrlParser: true,
   useCreateIndex: true,
   useFindAndModify: false,
   useUnifiedTopology: true,
-}).then(
-  () => { app.listen(PORT, () => {}); },
-  // eslint-disable-next-line no-console
-  (err) => { console.log(err); },
-);
+})
+  .then(() => {
+    const app = express();
 
-app.use((req, res, next) => {
-  req.user = {
-    _id: '5e7b5a655fcb0e12f89a718a',
-  };
+    app.listen(PORT, () => {});
 
-  next();
-});
+    app.use(helmet());
+    app.use(rateLimit({ windowMs: 15 * 60 * 1000, max: 100 }));
 
-app.use('/users', require('./routes/users'));
-app.use('/cards', require('./routes/cards'));
-app.use('*', require('./routes/error'));
+    app.use(bodyParser.json());
+    app.use(bodyParser.urlencoded({ extended: true }));
+    app.use(cookieParser());
+
+    app.use('/', router);
+  })
+  .catch((err) => {
+    // eslint-disable-next-line no-console
+    console.log(`Ошибка подключения к базе данных ${err}`);
+  });
