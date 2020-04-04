@@ -13,6 +13,12 @@ const { requestLogger, errorLogger } = require('../middlewares/logger');
 
 router.use(requestLogger);
 
+router.get('/crash-test', () => {
+  setTimeout(() => {
+    throw new Error('Сервер сейчас упадёт');
+  }, 0);
+});
+
 router.post('/signup', validateRegistration, createUser);
 router.post('/signin', validateLogin, login);
 

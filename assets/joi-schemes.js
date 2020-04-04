@@ -24,8 +24,15 @@ const validateLogin = celebrate({
   }),
 });
 
+const validateObjectId = celebrate({
+  params: Joi.object().keys({
+    postId: Joi.string().alphanum().length(24),
+  }),
+});
+
 module.exports = {
   validatecard,
   validateRegistration,
   validateLogin,
+  validateObjectId,
 };
