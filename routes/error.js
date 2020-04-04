@@ -1,5 +1,7 @@
-const sendError = (req, res) => {
-  res.status(404).send({ message: 'Запрашиваемый ресурс не найден' });
-};
+const error = require('express').Router();
 
-module.exports = sendError;
+error.use('*', (req, res) => {
+  res.status(404).send({ message: 'Такой страницы не существует' });
+});
+
+module.exports = error;
