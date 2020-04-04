@@ -1,7 +1,7 @@
 {
-  "name": "sprint_13",
+  "name": "sprint_15",
   "version": "1.0.0",
-  "description": "",
+  "description": "learning yandex praktikum project",
   "main": "app.js",
   "scripts": {
     "start": "node app.js",
