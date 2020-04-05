@@ -3,7 +3,7 @@ const { celebrate, Joi } = require('celebrate');
 const validatecard = celebrate({
   body: Joi.object().keys({
     name: Joi.string().required().min(2).max(30),
-    text: Joi.string().required().uri(),
+    link: Joi.string().required().uri(),
   }),
 });
 
@@ -26,7 +26,7 @@ const validateLogin = celebrate({
 
 const validateObjectId = celebrate({
   params: Joi.object().keys({
-    postId: Joi.string().alphanum().length(24),
+    id: Joi.string().alphanum().length(24),
   }),
 });
 

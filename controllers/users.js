@@ -13,7 +13,7 @@ module.exports.getUsers = (req, res, next) => {
 };
 
 module.exports.findUser = (req, res, next) => {
-  User.findById(req.params.userId)
+  User.findById(req.params.id)
     .then((user) => {
       if (user) {
         res.send({ data: user });

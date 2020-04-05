@@ -5,6 +5,6 @@ const { validatecard, validateObjectId } = require('../assets/joi-schemes');
 
 cardRouter.get('/', getCards);
 cardRouter.post('/', validatecard, createCard);
-cardRouter.delete('/:cardId', validateObjectId, deleteCard);
+cardRouter.delete('/:id', validateObjectId, deleteCard);
 
 module.exports = cardRouter;

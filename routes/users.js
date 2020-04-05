@@ -4,6 +4,6 @@ const { getUsers, findUser } = require('../controllers/users');
 const { validateObjectId } = require('../assets/joi-schemes');
 
 userRouter.get('/', getUsers);
-userRouter.get('/:userId', validateObjectId, findUser);
+userRouter.get('/:id', validateObjectId, findUser);
 
 module.exports = userRouter;

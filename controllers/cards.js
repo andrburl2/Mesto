@@ -18,7 +18,7 @@ module.exports.createCard = (req, res, next) => {
 };
 
 module.exports.deleteCard = (req, res, next) => {
-  Card.findById(req.params.cardId)
+  Card.findById(req.params.id)
     .then((card) => {
       if (card) {
         if (req.user._id.toString() === card.owner.toString()) {
