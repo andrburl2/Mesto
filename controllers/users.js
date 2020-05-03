@@ -1,28 +1,30 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
-const { JWT_SECRET } = require('../config');
+const { JWT_SECRET } = require('../assets/config');
 const User = require('../models/user');
 
-module.exports.getUsers = (req, res) => {
+const NotFoundError = require('../errors/not-found-error');
+
+module.exports.getUsers = (req, res, next) => {
   User.find({})
     .then((users) => res.send({ data: users }))
-    .catch(() => res.status(500).send({ message: 'Не удается получить пользователей' }));
+    .catch(next);
 };
 
-module.exports.findUser = (req, res) => {
-  User.findById(req.params.userId)
-    .then((users) => {
-      if (users) {
-        res.send({ data: users });
+module.exports.findUser = (req, res, next) => {
+  User.findById(req.params.id)
+    .then((user) => {
+      if (user) {
+        res.send({ data: user });
       } else {
-        res.status(404).send({ message: 'Не удается найти пользователя' });
+        throw new NotFoundError('Не удается найти пользователя');
       }
     })
-    .catch(() => res.status(500).send({ message: 'Неправильный запрос' }));
+    .catch(next);
 };
 
-module.exports.createUser = (req, res) => {
+module.exports.createUser = (req, res, next) => {
   const {
     name, about, avatar, email, password,
   } = req.body;
@@ -45,10 +47,10 @@ module.exports.createUser = (req, res) => {
         },
       });
     })
-    .catch((err) => res.status(500).send({ message: err.message || 'Произошла ошибка' }));
+    .catch(next);
 };
 
-module.exports.login = (req, res) => {
+module.exports.login = (req, res, next) => {
   const { email, password } = req.body;
 
   return User.findUserByCredentials(email, password)
@@ -67,7 +69,5 @@ module.exports.login = (req, res) => {
 
       res.send(req.cookies.jwt);
     })
-    .catch((err) => {
-      res.status(401).send({ message: err.message || 'Произошла ошибка' });
-    });
+    .catch(next);
 };

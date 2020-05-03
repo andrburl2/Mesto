@@ -1,20 +1,34 @@
 const router = require('express').Router();
+const { errors } = require('celebrate');
 
 const { createUser, login } = require('../controllers/users');
 const cards = require('./cards');
 const users = require('./users');
-const sendError = require('./error');
+const error = require('./error');
 
 const auth = require('../middlewares/auth');
+const errorHandler = require('../middlewares/errorHandler');
+const { validateRegistration, validateLogin } = require('../assets/joi-schemes');
+const { requestLogger, errorLogger } = require('../middlewares/logger');
 
-router.post('/signup', createUser);
-router.post('/signin', login);
+router.use(requestLogger);
+
+router.get('/crash-test', () => {
+  setTimeout(() => {
+    throw new Error('Сервер сейчас упадёт');
+  }, 0);
+});
+
+router.post('/signup', validateRegistration, createUser);
+router.post('/signin', validateLogin, login);
 
 router.use(auth);
-
 router.use('/cards', cards);
 router.use('/users', users);
 
-router.use(sendError);
+router.use(errorLogger);
+router.use(error);
+router.use(errors());
+router.use(errorHandler);
 
 module.exports = router;

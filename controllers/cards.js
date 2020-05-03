@@ -1,32 +1,35 @@
 const Card = require('../models/card');
 
-module.exports.getCards = (req, res) => {
+const UnauthorizedError = require('../errors/unauthorized-error');
+const NotFoundError = require('../errors/not-found-error');
+
+module.exports.getCards = (req, res, next) => {
   Card.find({})
     .then((cards) => res.send({ data: cards }))
-    .catch(() => res.status(500).send({ message: 'Не удается получить карточки' }));
+    .catch(next);
 };
 
-module.exports.createCard = (req, res) => {
+module.exports.createCard = (req, res, next) => {
   const { name, link } = req.body;
 
   Card.create({ name, link, owner: req.user._id })
     .then((card) => res.send({ data: card }))
-    .catch((err) => res.status(500).send({ message: err.message || 'Произошла ошибка' }));
+    .catch(next);
 };
 
-module.exports.deleteCard = (req, res) => {
-  Card.findById(req.params.cardId)
+module.exports.deleteCard = (req, res, next) => {
+  Card.findById(req.params.id)
     .then((card) => {
       if (card) {
         if (req.user._id.toString() === card.owner.toString()) {
           Card.deleteOne(card)
             .then(() => res.send(card));
         } else {
-          res.status(401).send({ message: 'Нельзя удалить чужую карточку' });
+          throw new UnauthorizedError('Нельзя удалить чужую карточку');
         }
       } else {
-        res.status(404).send({ message: 'Не удается найти карточку' });
+        throw new NotFoundError('Не удается найти карточку');
       }
     })
-    .catch(() => res.status(500).send({ message: 'Ошибка при удаление карточки' }));
+    .catch(next);
 };

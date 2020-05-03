@@ -8,7 +8,7 @@ const cookieParser = require('cookie-parser');
 const helmet = require('helmet');
 const rateLimit = require('express-rate-limit');
 
-const { PORT, MONGO_ADRESS } = require('./config');
+const { PORT, MONGO_ADRESS } = require('./assets/config');
 const router = require('./routes/index');
 
 mongoose.connect(MONGO_ADRESS, {
